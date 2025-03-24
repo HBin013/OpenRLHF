@@ -4,6 +4,7 @@ import socket
 from typing import Callable, Dict, List, Optional, Type
 
 import ray
+import ray.train
 import torch
 from ray.util.placement_group import PlacementGroup, placement_group
 from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
@@ -32,7 +33,8 @@ class DistributedTorchRayActor:
         # environment variable for each actor, unless
         # RAY_EXPERIMENTAL_NOSET_*_VISIBLE_DEVICES is set, so
         # set local rank to 0 when the flag is not applicable.
-        os.environ["LOCAL_RANK"] = str(ray.get_gpu_ids()[0]) if ray_noset_visible_devices() else "0"
+        # os.environ["LOCAL_RANK"] = str(ray.get_gpu_ids()[0]) if ray_noset_visible_devices() else "0"
+        os.environ["LOCAL_RANK"] = str(get_context().get_local_rank()) if ray_noset_visible_devices() else "0"
 
     @staticmethod
     def _get_current_node_ip():

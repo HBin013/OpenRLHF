@@ -19,7 +19,13 @@ def ray_noset_visible_devices(env_vars=os.environ):
         "RAY_EXPERIMENTAL_NOSET_TPU_VISIBLE_CHIPS",
         "RAY_EXPERIMENTAL_NOSET_ONEAPI_DEVICE_SELECTOR",
     ]
-    return any(env_vars.get(env_var) for env_var in NOSET_VISIBLE_DEVICES_ENV_VARS_LIST)
+    flag = False
+    for env_var in NOSET_VISIBLE_DEVICES_ENV_VARS_LIST:
+        if env_var in env_vars.keys() and env_vars.get(env_var) == '1':
+            print(env_var, env_vars.get(env_var))
+            flag = True
+    return flag
+    # return any(env_vars.get(env_var) for env_var in NOSET_VISIBLE_DEVICES_ENV_VARS_LIST)
 
 
 def get_physical_gpu_id():
