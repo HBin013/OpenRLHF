@@ -4,7 +4,7 @@ import socket
 from typing import Any, Callable, Dict, List, Optional, Type
 
 import ray
-import ray.train
+from ray.train import get_context
 import torch
 from ray.util.placement_group import PlacementGroup, placement_group
 from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
